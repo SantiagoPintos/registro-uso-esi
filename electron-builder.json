@@ -3,7 +3,8 @@
     "productName": "ts",
     "files": [
         "./dist/*.js",
-        "./dist/index.html"
+        "./dist/index.html",
+        "./dist/*.css"
     ],
     "directories": {
         "output": "build"
