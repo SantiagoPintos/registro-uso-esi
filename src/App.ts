@@ -14,7 +14,7 @@ const createWindow = async ():Promise<void> => {
     win.loadFile(path.join(__dirname, "index.html"));
 
     if (isDev) {
-        win.webContents.openDevTools;
+        win.webContents.openDevTools();
     }
 
     ipcMain.handle('dark-mode:toggle', () => {
