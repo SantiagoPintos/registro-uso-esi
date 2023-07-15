@@ -1,0 +1,25 @@
+{
+  "name": "ts",
+  "version": "0.0.1",
+  "description": "ts-app",
+  "main": "./dist/App.js",
+  "scripts": {
+    "build": "tsc && copyfiles -u 1 src/index.html && copyfiles -u 1 src/styles.css dist",
+    "start": "electron ./dist/App.js",
+    "debug": "tsc && copyfiles -u 1 src/index.html dist && copyfiles -u 1 src/styles.css && electron ./dist/App.js",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder --config ./electron-builder.json"
+  },
+  "keywords": [],
+  "author": "Santiago Pintos",
+  "license": "ISC",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "copyfiles": "^2.4.1",
+    "electron": "^25.3.0",
+    "electron-builder": "^24.4.0",
+    "eslint": "^8.45.0",
+    "typescript": "^5.1.6"
+  }
+}

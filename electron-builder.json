@@ -1,0 +1,14 @@
+{
+    "appId": "com.santiago.ts",
+    "productName": "ts",
+    "files": [
+        "./dist/*.js",
+        "./dist/index.html"
+    ],
+    "directories": {
+        "output": "build"
+    },
+    "win": {
+        "target": "portable"
+    }
+}
