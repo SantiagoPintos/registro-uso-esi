@@ -1,5 +1,6 @@
-import { app, BrowserWindow, ipcMain, nativeTheme } from "electron";
+import { app, BrowserWindow } from "electron";
 import path from "path";
+import { setMainMenu } from "./menu/menu"
 
 const isDev:boolean = true;
 const createWindow = async ():Promise<void> => {
@@ -13,22 +14,11 @@ const createWindow = async ():Promise<void> => {
 
     win.loadFile(path.join(__dirname, "index.html"));
 
+    setMainMenu();
+
     if (isDev) {
         win.webContents.openDevTools();
     }
-
-    ipcMain.handle('dark-mode:toggle', () => {
-    if (nativeTheme.shouldUseDarkColors) {
-        nativeTheme.themeSource = 'light'
-    } else {
-        nativeTheme.themeSource = 'dark'
-    }
-    return nativeTheme.shouldUseDarkColors
-    })
-
-    ipcMain.handle('dark-mode:system', () => {
-    nativeTheme.themeSource = 'system'
-    })
 };
 
 app.whenReady().then(() => {
