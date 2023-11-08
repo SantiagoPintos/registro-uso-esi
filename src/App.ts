@@ -6,15 +6,15 @@ import  sqlite3  from "sqlite3";
 const isDev:boolean = true;
 let db;
 const createWindow = async ():Promise<void> => {
-    db = new sqlite3.Database('./dabatase.db', (err: Error|null) =>{
+    db = new sqlite3.Database('./database/database.db', (err: Error|null) =>{
         if (err)
             console.error(err)
 
         console.log('Conexion exitosa a la base de datos');
     });
 
-    const updateQuery = "CREATE TABLE test (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT)";
-    db.run(updateQuery, [], function(this: any, err: Error) {
+    const createQuery = "CREATE TABLE alumnos (ci INTEGER PRIMARY KEY, nombre TEXT, grupo TEXT)";
+    db.run(createQuery, [], function(this: any, err: Error) {
     if (err) {
       return console.error(err.message);
     }
