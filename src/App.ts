@@ -4,7 +4,6 @@ import { setMainMenu } from "./menu/menu"
 import { databaseConnector, closeConnection } from "./dbManager/dbConnection";
 import { createData } from "./dbManager/dbOperator";
 
-const isDev:boolean = true;
 const createWindow = async ():Promise<void> => {
     const db = databaseConnector();
     createData(db);
@@ -21,10 +20,6 @@ const createWindow = async ():Promise<void> => {
     win.loadFile(path.join(__dirname, "index.html"));
 
     setMainMenu();
-
-    if (isDev) {
-        win.webContents.openDevTools();
-    }
 };
 
 app.whenReady().then(() => {
