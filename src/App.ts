@@ -6,7 +6,7 @@ import  sqlite3  from "sqlite3";
 const isDev:boolean = true;
 let db;
 const createWindow = async ():Promise<void> => {
-    db = new sqlite3.Database('./database/database.db', (err: Error|null) =>{
+    db = new sqlite3.Database('./database/database.sqlite', (err: Error|null) =>{
         if (err)
             console.error(err)
 
