@@ -220,4 +220,8 @@ $RECYCLE.BIN/
 package-lock.json
 build
 
+# database files
 *.sqlite
+
+# webstorm files
+.idea
