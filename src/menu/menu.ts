@@ -1,17 +1,11 @@
-import { Menu, app, shell } from "electron"
+import { Menu, shell } from "electron"
 
 export const setMainMenu = () => {
     const template: Array<object> = [
         {
-            label: app.name,
+            label: 'Horarios',
             submenu: [
                 { role: 'about' },
-                { type: 'separator' },
-                { role: 'services' },
-                { type: 'separator' },
-                { role: 'hide' },
-                { role: 'hideOthers' },
-                { role: 'unhide' },
                 { type: 'separator' },
                 { role: 'quit' }
             ],
@@ -20,12 +14,6 @@ export const setMainMenu = () => {
             label: 'View',
             submenu: [
               { role: 'reload' },
-              { role: 'forceReload' },
-              { role: 'toggleDevTools' },
-              { type: 'separator' },
-              { role: 'resetZoom' },
-              { role: 'zoomIn' },
-              { role: 'zoomOut' },
               { type: 'separator' },
               { role: 'togglefullscreen' }
             ] 

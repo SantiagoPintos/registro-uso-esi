@@ -2,11 +2,11 @@ import { app, BrowserWindow } from "electron";
 import path from "path";
 import { setMainMenu } from "./menu/menu"
 
-const isDev:boolean = true;
+const isDev:boolean = false;
 const createWindow = async ():Promise<void> => {
     const win = new BrowserWindow({
-        height: 600,
-        width: 800,
+        height: 900,
+        width: 1000,
         webPreferences: {
             preload: path.join(__dirname, "preload.js")
         }
