@@ -1,32 +1,14 @@
 import { app, BrowserWindow } from "electron";
 import path from "path";
 import { setMainMenu } from "./menu/menu"
-import  sqlite3  from "sqlite3";
+import { databaseConnector, closeConnection } from "./dbManager/dbConnection";
+import { createData } from "./dbManager/dbOperator";
 
 const isDev:boolean = true;
-let db;
 const createWindow = async ():Promise<void> => {
-    db = new sqlite3.Database('./database/database.sqlite', (err: Error|null) =>{
-        if (err)
-            console.error(err)
-
-        console.log('Conexion exitosa a la base de datos');
-    });
-
-    const createQuery = "CREATE TABLE alumnos (ci INTEGER PRIMARY KEY, nombre TEXT, grupo TEXT)";
-    db.run(createQuery, [], function(this: any, err: Error) {
-    if (err) {
-      return console.error(err.message);
-    }
-    console.log(`Filas actualizadas: ${this.changes}`);
-  });
-
-  db.close((err) => {
-    if (err) {
-      console.error(err.message);
-    }
-    console.log('Conexión a la base de datos cerrada');
-  });
+    const db = databaseConnector();
+    createData(db);
+    closeConnection();
 
     const win = new BrowserWindow({
         height: 900,
