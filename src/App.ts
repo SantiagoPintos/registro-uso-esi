@@ -1,9 +1,33 @@
 import { app, BrowserWindow } from "electron";
 import path from "path";
 import { setMainMenu } from "./menu/menu"
+import  sqlite3  from "sqlite3";
 
-const isDev:boolean = false;
+const isDev:boolean = true;
+let db;
 const createWindow = async ():Promise<void> => {
+    db = new sqlite3.Database('./dabatase.db', (err: Error|null) =>{
+        if (err)
+            console.error(err)
+
+        console.log('Conexion exitosa a la base de datos');
+    });
+
+    const updateQuery = "CREATE TABLE test (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT)";
+    db.run(updateQuery, [], function(this: any, err: Error) {
+    if (err) {
+      return console.error(err.message);
+    }
+    console.log(`Filas actualizadas: ${this.changes}`);
+  });
+
+  db.close((err) => {
+    if (err) {
+      console.error(err.message);
+    }
+    console.log('Conexión a la base de datos cerrada');
+  });
+
     const win = new BrowserWindow({
         height: 900,
         width: 1000,
