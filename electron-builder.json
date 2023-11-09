@@ -1,10 +1,11 @@
 {
-    "appId": "com.santiago.ts",
+    "appId": "com.esi.registrouso",
     "productName": "ts",
     "files": [
         "./dist/*.js",
         "./dist/index.html",
-        "./dist/*.css"
+        "./dist/*.css",
+        "./dist/database/database.sqlite"
     ],
     "directories": {
         "output": "build"
