@@ -1,7 +1,7 @@
 import { app, BrowserWindow } from "electron";
 import path from "path";
 import { setMainMenu } from "./menu/menu"
-import { databaseConnector, closeConnection } from "./dbManager/dbConnection";
+import { databaseConnector, closeConnection, createDatabaseIfNotExists } from "./dbManager/dbConnection";
 import { createData } from "./dbManager/dbOperator";
 
 const createWindow = async ():Promise<void> => {
@@ -23,6 +23,7 @@ const createWindow = async ():Promise<void> => {
 };
 
 app.whenReady().then(() => {
+    createDatabaseIfNotExists();
     createWindow();
 
     app.on("activate", () => {

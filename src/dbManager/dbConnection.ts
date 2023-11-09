@@ -1,16 +1,34 @@
-import * as sqlite3 from 'sqlite3'
+import * as sqlite3 from 'sqlite3';
+import { app } from 'electron';
+import path from 'path';
+import fs from 'fs';
 
-let db: sqlite3.Database|null = null;
+const databasePath = path.join(app.getPath("userData"), 'database.sqlite');
+let db: sqlite3.Database;
 
-export function databaseConnector(){
-    if(db===null){
-        db = new sqlite3.Database('./src/database/database.sqlite', (err: Error|null) =>{
-            if (err) throw new Error(err.message);
-            
-            console.log('Conexion exitosa a db');
-        });
+export function createDatabaseIfNotExists() {
+  if (!fs.existsSync(databasePath)) {
+    try{
+      const directoryPath = path.dirname(databasePath);
+      if (!fs.existsSync(directoryPath)) {
+        fs.mkdirSync(directoryPath, { recursive: true });
+      }
+      fs.writeFileSync(databasePath, '');
+    } catch (err) {
+      console.log('Error al crear db', err);
     }
-    return db;
+  } else {
+    console.log('db ya existe');
+  }
+}
+
+export function databaseConnector() {
+  db = new sqlite3.Database(databasePath, (err: Error | null) => {
+    if (err) throw new Error(err.message);
+    console.log('Conexion exitosa a db');
+  });
+
+  return db;
 }
 
 export function closeConnection(){
