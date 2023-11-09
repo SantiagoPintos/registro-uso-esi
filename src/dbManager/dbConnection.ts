@@ -3,7 +3,7 @@ import { app } from 'electron';
 import path from 'path';
 import fs from 'fs';
 
-const databasePath = path.join(app.getPath("userData"), 'database.sqlite');
+const databasePath = path.join(app.getPath("userData"), 'database', 'database.sqlite');
 let db: sqlite3.Database;
 
 export function createDatabaseIfNotExists() {
