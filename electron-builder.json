@@ -3,6 +3,7 @@
     "productName": "ts",
     "files": [
         "./dist/*.js",
+        "./dist/*/*.js",
         "./dist/index.html",
         "./dist/*.css",
         "./dist/database/database.sqlite"
