@@ -1,6 +1,5 @@
 import { Menu, shell } from "electron"
 import { databaseExporter} from "../dbManager/dbExporter";
-import {databasePath} from "../dbManager/dbConnection";
 
 export const setMainMenu = () => {
     const template: Array<object> = [
