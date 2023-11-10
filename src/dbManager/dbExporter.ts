@@ -16,10 +16,21 @@ export function databaseExporter(){
             const backupRoute: string | undefined = result.filePath;
             if(backupRoute){
                 fs.copyFile(databasePath, backupRoute, (err) => {
-                    err ? console.error('Error exportando la base de datos', err)
-                        : console.log('Base de datos exportada correctamente', backupRoute)
+                    if (err) {
+                        dialog.showErrorBox('Error al exportar la base de datos', err.message);
+                        console.error('Error exportando la base de datos', err)
+                    } else {
+                        dialog.showMessageBox({
+                            type: 'info',
+                            title: 'Operación realizada correctamente',
+                            message: 'Base de datos exportada correctamente.',
+                            buttons: ['OK']
+                        });
+                        console.log('Base de datos exportada correctamente', backupRoute)
+                    }
                 });
             } else {
+                dialog.showErrorBox('Error', 'No fue posible obtener la ruta de destino');
                 console.error('Error al obtener la ruta para exportar el archivo');
             }
         }
