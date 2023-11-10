@@ -1,4 +1,6 @@
 import { Menu, shell } from "electron"
+import { databaseExporter} from "../dbManager/dbExporter";
+import {databasePath} from "../dbManager/dbConnection";
 
 export const setMainMenu = () => {
     const template: Array<object> = [
@@ -9,6 +11,15 @@ export const setMainMenu = () => {
                 { type: 'separator' },
                 { role: 'quit' }
             ],
+        },
+        {
+            label: 'Utilidades',
+            submenu: [
+                {
+                    label: 'Exportar base de datos',
+                    click: () => { databaseExporter() }
+                }
+            ]
         },
         {
             label: 'View',
