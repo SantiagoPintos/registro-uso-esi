@@ -8,7 +8,7 @@
     "start": "electron ./dist/App.js",
     "debug": "tsc && copyfiles -u 1 src/index.html dist && copyfiles -u 1 src/styles.css && electron ./dist/App.js copyfiles -u 1 src/database/database.sqlite dist",
     "pack": "electron-builder --dir",
-    "dist": "electron-builder --config ./electron-builder.json"
+    "dist": "npm run build && electron-builder --config ./electron-builder.json"
   },
   "keywords": [],
   "author": "Santiago Pintos",
