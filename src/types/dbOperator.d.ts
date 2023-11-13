@@ -5,6 +5,16 @@ declare global {
         grupo: string,
         hora: Date
     }
+
+    interface Grupo{
+        nombre: string,
+    }
+
+    interface Registro{
+        alumno: Alumno,
+        entrada: Date,
+        salida: Date,
+    }
 }
 
 export {};

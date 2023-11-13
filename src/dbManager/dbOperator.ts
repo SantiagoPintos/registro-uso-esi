@@ -24,11 +24,26 @@ export function createData(db: Database){
 
 }
 
+export function insertGrupo(db:Database, data: Grupo){
+    const insertQuery = "INSERT INTO Grupo(nombre) VALUES (?)";
+    db.run(insertQuery,[data.nombre], function (err:Error|null){
+        if(err) throw new Error(err.message);
+        console.log('Grupo insertado');
+    })
+}
 export function insertAlumno(db: Database, data: Alumno){
     const insertQuery = "INSERT INTO alumno (ci, nombre, grupo, hora) VALUES (?, ?, ?, ?)";
 
     db.run(insertQuery, [data.ci, data.nombre, data.grupo, data.hora], function(err: Error|null){
         if (err) throw new Error(err.message);
         console.log('Alumno insertado');
+    })
+}
+
+export function insertRegistro(db:Database, data:Registro){
+    const insertQuery = "INSERT INTO Registro(alumno, entrada, saluda) VALUES(?, ?, ?)";
+    db.run(insertQuery, [data.alumno, data.entrada, data.salida], function (err: Error|null){
+        if(err) throw new Error(err.message);
+        console.log('Registro insertado con éxito');
     })
 }
