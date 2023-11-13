@@ -1,17 +1,18 @@
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, screen } from "electron";
 import path from "path";
 import { setMainMenu } from "./menu/menu"
 import { databaseConnector, closeConnection, createDatabaseIfNotExists } from "./dbManager/dbConnection";
 import { createData } from "./dbManager/dbOperator";
 
 const createWindow = async ():Promise<void> => {
+    const { width, height } = screen.getPrimaryDisplay().workAreaSize;
     const db = databaseConnector();
     createData(db);
     closeConnection();
 
     const win = new BrowserWindow({
-        height: 900,
-        width: 1000,
+        height: height,
+        width: width,
         webPreferences: {
             preload: path.join(__dirname, "preload.js")
         }
