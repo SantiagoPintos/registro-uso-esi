@@ -1,9 +1,14 @@
 import { Database } from 'sqlite3';
 
 export function createData(db: Database){
-    const createQueryAlumnos = "CREATE TABLE IF NOT EXISTS alumnos (ci TEXT PRIMARY KEY, nombre TEXT NOT NULL, grupo TEXT NOT NULL)";
+    const createQueryGrupo= "CREATE TABLE IF NOT EXISTS Grupo(nombre TEXT PRIMARY KEY)";
+    const createQueryAlumnos = "CREATE TABLE IF NOT EXISTS alumnos (ci TEXT PRIMARY KEY, nombre TEXT NOT NULL, grupo TEXT, FOREIGN KEY(grupo) REFERENCES Grupo(nombre))";
     const createQueryRegistro= "CREATE TABLE IF NOT EXISTS registro (alumno TEXT PRIMARY KEY, entrada DATETIME NOT NULL, salida DATETIME NOT NULL, FOREIGN KEY (alumno) REFERENCES alumnos(ci))";
-
+    
+    db.run(createQueryGrupo, [], function(err: Error|null){
+        if (err) throw new Error(err.message);
+        console.log('Tabla grupos creada');
+    })
     db.run(createQueryAlumnos, [], function(err: Error|null){
         if (err) throw new Error(err.message);
         console.log('Tabla alumnos creada');
