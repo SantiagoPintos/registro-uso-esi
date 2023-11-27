@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc && copyfiles -u 1 src/index.html dist && copyfiles -u 1 src/styles.css dist && copyfiles -u 1 src/database/database.sqlite dist",
     "start": "electron ./dist/App.js",
-    "debug": "tsc && copyfiles -u 1 src/index.html dist && copyfiles -u 1 src/styles.css && electron ./dist/App.js copyfiles -u 1 src/database/database.sqlite dist",
+    "debug": "tsc && copyfiles -u 1 src/index.html dist && copyfiles -u 1 src/styles.css dist && electron ./dist/App.js copyfiles -u 1 src/database/database.sqlite dist",
     "pack": "electron-builder --dir",
     "dist": "npm run build && electron-builder --config ./electron-builder.json"
   },

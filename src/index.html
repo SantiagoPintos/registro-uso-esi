@@ -3,11 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
-    <link rel="stylesheet" type="text/css" href="./styles.css">
     <title>Document</title>
-    <script src="./renderer.js" defer></script>
+    <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
+    <main>
+        <section>
+            <div id="in">
+                <h1 class="title">Dentro</h1>
+            </div>
+            <div id="main">
+                <div>
+                    <p id="date"></p>
+                </div>
+                <div>
+                    <p id="hour"></p>
+                </div>
+                <div>
+                    <input type="text" name="ci" placeholder="CI" required autofocus>
+                </div>
+            </div>
+            <div id="out">
+                <h1 class="title">Salieron</h1>
+            </div>
+        </section>   
+    </main>
 </body>
+<script src="./renderer.js"></script>
 </html>
