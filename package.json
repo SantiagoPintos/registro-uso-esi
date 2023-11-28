@@ -17,8 +17,8 @@
     "@typescript-eslint/eslint-plugin": "6.0.0",
     "@typescript-eslint/parser": "6.0.0",
     "copyfiles": "2.4.1",
-    "electron": "25.3.0",
-    "electron-builder": "24.4.0",
+    "electron": "^25.9.6",
+    "electron-builder": "^24.9.1",
     "eslint": "8.45.0",
     "typescript": "5.1.6"
   },
