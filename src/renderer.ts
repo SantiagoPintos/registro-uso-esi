@@ -6,7 +6,8 @@ function main(): void {
         if (event.key === "Enter") {
             try{
                 const ci: string = captureData();
-                //TODO: send data to main process and validate it
+                // we send the data to the main process
+                window.ciTransfer.sendToMain(ci);
             } 
             catch(exception: any){
                 document.querySelector("#msg")!.innerHTML = exception.message;

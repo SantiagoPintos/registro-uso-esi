@@ -2,6 +2,10 @@ export {};
 
 declare global {
     interface Window {
-      darkMode: any;
+      ciTransfer: ciTransfer;
+    }
+
+    interface ciTransfer {
+        sendToMain: (ci: string) => void;
     }
   }
