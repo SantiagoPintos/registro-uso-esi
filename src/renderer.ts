@@ -2,6 +2,9 @@ window.addEventListener("load", main);
 
 function main(): void {
     setInterval(setDate, 1000);
+    document.addEventListener("keydown", (event: KeyboardEvent):void => {
+        if (event.key === "Enter") captureData();
+    });
 }
 
 function setDate(): void {
@@ -11,3 +14,11 @@ function setDate(): void {
     document.querySelector("#hour")!.innerHTML = hour;
     document.querySelector("#date")!.innerHTML = day;
 }
+
+function captureData(): void {
+    const e: HTMLInputElement | null = document.querySelector("#ci");
+    const value: string = e!.value;
+    if(value.trim() != "") console.log(value);
+}
+
+
