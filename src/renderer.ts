@@ -3,7 +3,19 @@ window.addEventListener("load", main);
 function main(): void {
     setInterval(setDate, 1000);
     document.addEventListener("keydown", (event: KeyboardEvent):void => {
-        if (event.key === "Enter") captureData();
+        if (event.key === "Enter") {
+            try{
+                const ci: string = captureData();
+                validateData(ci);
+            } 
+            catch(exception: any){
+                document.querySelector("#msg")!.innerHTML = exception.message;
+                //wait 3 seconds and clear the message
+                setTimeout(() => {
+                    document.querySelector("#msg")!.innerHTML = "";
+                }, 3000);
+            }
+        }
     });
 }
 
@@ -29,6 +41,7 @@ function captureData(): string {
 function validateData(ci: string): void {
     //validate if ci is a valid uruguayan ci
     if(!validateDigitoVerificadorCI(ci)) throw new Error("Cédula inválida");
+    //TODO: Check if CI is in database
 }
 
 /* 
