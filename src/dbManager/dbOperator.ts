@@ -47,3 +47,18 @@ export function insertRegistro(db:Database, data:Registro){
         console.log('Registro insertado con éxito');
     })
 }
+
+export function isInDB(db: Database, ci: string): boolean{
+    const selectQuery = "SELECT ci FROM alumnos WHERE ci = ?";
+    let result: boolean = false;
+    try{
+        db.get(selectQuery, [ci], function(err: Error|null, row: any){
+        if(err) throw new Error(err.message);
+        if(row) result = true;
+    })
+    }
+    catch(err){
+        throw new Error('Error al buscar en la base de datos');
+    }
+    return result;
+}
