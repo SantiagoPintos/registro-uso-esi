@@ -7,7 +7,7 @@ export async function validateData(ci: string):Promise<void>{
     if(!ciValidator(ci)) throw new Error("CI invalida");
     const db = databaseConnector();
     try{
-        const isRegistered = await isInDB(db, ci);
+        const isRegistered = isInDB(db, ci);
         if (!isRegistered) {
             throw new Error("CI no registrada en la base de datos");
         }
