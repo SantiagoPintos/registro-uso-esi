@@ -2,7 +2,7 @@ import { ciValidator } from "./ciValidator";
 import { isInDB } from "../dbManager/dbOperator";
 import { databaseConnector, closeConnection } from "../dbManager/dbConnection";
 
-export async function validateData(ci: string):Promise<void>{
+export function validateData(ci: string):void{
     //validate if ci is a valid uruguayan ci
     if(!ciValidator(ci)) throw new Error("CI invalida");
     const db = databaseConnector();
