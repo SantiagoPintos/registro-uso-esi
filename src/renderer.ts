@@ -29,10 +29,11 @@ async function processData(ci: string): Promise<void> {
 
 function setDate(): void {
     const date: Date = new Date();
-    const hour: string = `${date.getHours()}:${date.getMinutes()}`;
+    const minutes: string = date.getMinutes().toString().padStart(2, '0');
+    const hour: string = `${date.getHours().toString().padStart(2, '0')}:${minutes}`;
     const day: string = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
-    document.querySelector("#hour")!.innerHTML = hour;
-    document.querySelector("#date")!.innerHTML = day;
+    (document.querySelector("#hour") as HTMLElement).innerHTML = hour;
+    (document.querySelector("#date") as HTMLElement).innerHTML = day;
 }
 
 function captureData(): string {
