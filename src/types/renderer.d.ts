@@ -6,6 +6,6 @@ declare global {
     }
 
     interface ciTransfer {
-        sendToMain: (ci: string) => void;
+        sendToMain: (ci: string) => string;
     }
   }

@@ -11,8 +11,6 @@ export async function validateData(ci: string):Promise<void>{
         if (!isRegistered) {
             throw new Error("CI no registrada en la base de datos");
         }
-    } catch (e: any) {
-        console.error(e.message);
     } finally {
         closeConnection();
     }
