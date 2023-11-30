@@ -10,18 +10,10 @@ export async function createGroup(name: string): Promise<void> {
 
     try {
         const db = databaseConnector();
-        if (!groupIsInDB(db, name)){
-            await insertGrupo(db, group);
-        }
+        await groupIsInDB(db, name)
+        await insertGrupo(db, group);
     } catch (error: any) {
-        //hack, needs to be fixed later
-        if (error.message.includes("SQLITE_CONSTRAINT: UNIQUE constraint failed")) {
-            throw new Error("Error, el grupo ya existe");
-        } else {
-            throw new Error('Error al insertar grupo en la base de datos');
-        }
-
-
+        throw new Error(error.message);
     } finally {
         closeConnection();
     }

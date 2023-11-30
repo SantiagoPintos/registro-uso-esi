@@ -69,19 +69,19 @@ export function isInDB(db: Database, ci: string): boolean{
     return result;
 }
 
-//check if a group exists in group table
-export function groupIsInDB(db: Database, name: string): boolean{
-    const selectQuery = "SELECT nombre FROM Grupo WHERE nombre = ?";
-    let result: boolean = false;
-    try{
-        db.get(selectQuery, [name.toUpperCase()], function(err: Error|null, row: any){
-            if(row.nombre === name.toUpperCase()) result = true;
-            if(err) throw new Error(err.message)
-    })
-    }
-    catch(err){
-        throw new Error('Error al buscar en la base de datos');
-    }
-    if(result) console.log("true");
-    return result;
+export function groupIsInDB(db: Database, name: string): Promise<void>{
+    return new Promise((resolve, reject) => {
+        const selectQuery = "SELECT nombre FROM Grupo WHERE nombre = ?";
+        db.get(selectQuery, [name.toUpperCase()], function(err: Error|null, row: any) {
+            if (err) {
+                reject(new Error(err.message));
+            } else {
+                if (row && row.nombre === name.toUpperCase()) {
+                    reject(new Error('Error, el grupo ya existe'));
+                } else {
+                    resolve();
+                }
+            }
+        });
+    });
 }
