@@ -1,7 +1,8 @@
-import { Menu, shell } from "electron"
+import { Menu, shell, BrowserWindow } from "electron"
+import path from "path";
 import { databaseExporter} from "../dbManager/dbExporter";
 
-export const setMainMenu = () => {
+export const setMainMenu = (window: BrowserWindow) => {
     const template: Array<object> = [
         {
             label: 'Horarios',
@@ -14,6 +15,14 @@ export const setMainMenu = () => {
         {
             label: 'Utilidades',
             submenu: [
+                {
+                    label: 'Agregar grupo',
+                    click: () => {
+                        window.webContents.loadFile(
+                            path.join(__dirname, "./../groupManager/newGroup.html"),
+                        )
+                    }
+                },
                 {
                     label: 'Exportar base de datos',
                     click: () => { databaseExporter() }

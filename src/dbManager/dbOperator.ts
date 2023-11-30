@@ -24,12 +24,18 @@ export function createData(db: Database){
 
 }
 
-export function insertGrupo(db:Database, data: Grupo){
-    const insertQuery = "INSERT INTO Grupo(nombre) VALUES (?)";
-    db.run(insertQuery,[data.nombre], function (err:Error|null){
-        if(err) throw new Error(err.message);
-        console.log('Grupo insertado');
-    })
+export function insertGrupo(db: Database, data: Grupo): Promise<void> {
+    return new Promise((resolve, reject): void => {
+        const insertQuery = "INSERT INTO Grupo(nombre) VALUES (?)";
+        db.run(insertQuery, [data.nombre], function (err: Error | null) {
+            if (err) {
+                reject(new Error(err.message));
+            } else {
+                console.log('Grupo insertado');
+                resolve();
+            }
+        });
+    });
 }
 export function insertAlumno(db: Database, data: Alumno){
     const insertQuery = "INSERT INTO alumno (ci, nombre, grupo, hora) VALUES (?, ?, ?, ?)";
@@ -60,5 +66,22 @@ export function isInDB(db: Database, ci: string): boolean{
     catch(err){
         throw new Error('Error al buscar en la base de datos');
     }
+    return result;
+}
+
+//check if a group exists in group table
+export function groupIsInDB(db: Database, name: string): boolean{
+    const selectQuery = "SELECT nombre FROM Grupo WHERE nombre = ?";
+    let result: boolean = false;
+    try{
+        db.get(selectQuery, [name.toUpperCase()], function(err: Error|null, row: any){
+            if(row.nombre === name.toUpperCase()) result = true;
+            if(err) throw new Error(err.message)
+    })
+    }
+    catch(err){
+        throw new Error('Error al buscar en la base de datos');
+    }
+    if(result) console.log("true");
     return result;
 }
