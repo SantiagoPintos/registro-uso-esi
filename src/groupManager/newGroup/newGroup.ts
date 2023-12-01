@@ -1,6 +1,6 @@
-import { insertGrupo } from "../dbManager/dbOperator";
-import { databaseConnector, closeConnection } from "../dbManager/dbConnection";
-import { groupIsInDB } from "../dbManager/dbOperator";
+import { insertGrupo } from "../../dbManager/dbOperator";
+import { databaseConnector, closeConnection } from "../../dbManager/dbConnection";
+import { groupIsInDB } from "../../dbManager/dbOperator";
 
 export async function createGroup(name: string): Promise<void> {
     name=name.trim().toUpperCase();

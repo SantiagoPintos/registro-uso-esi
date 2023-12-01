@@ -4,7 +4,7 @@ import { setMainMenu } from "./menu/menu"
 import { databaseConnector, closeConnection, createDatabaseIfNotExists } from "./dbManager/dbConnection";
 import { createData } from "./dbManager/dbOperator";
 import { validateData } from "./dataProcessor/dataValidator";
-import { createGroup } from "./groupManager/newGroup";
+import { createGroup } from "./groupManager/newGroup/newGroup";
 
 const createWindow = async ():Promise<void> => {
     const { width, height } = screen.getPrimaryDisplay().workAreaSize;
