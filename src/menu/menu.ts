@@ -19,7 +19,7 @@ export const setMainMenu = (window: BrowserWindow) => {
                     label: 'Agregar grupo',
                     click: () => {
                         window.webContents.loadFile(
-                            path.join(__dirname, "./../groupManager/newGroup.html"),
+                            path.join(__dirname, "./../groupManager/newGroup/newGroup.html"),
                         )
                     }
                 },

@@ -21,5 +21,8 @@ contextBridge.exposeInMainWorld('createGroup', {
             console.error(e.message);
             return e.message;
         }
+    },
+    returnToMain: (): void => {
+        ipcRenderer.send("returnToMain");
     }
 });

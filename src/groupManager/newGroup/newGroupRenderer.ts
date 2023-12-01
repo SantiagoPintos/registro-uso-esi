@@ -7,8 +7,12 @@ function initial(): void{
         }
     });
     const btn = document.querySelector("#btn") as HTMLButtonElement;
+    const btnCancelar = document.querySelector("#btnCancelar") as HTMLButtonElement;
     btn.addEventListener("click", () => {
         sendData(captureDataFromHTML());
+    })
+    btnCancelar.addEventListener("click", () => {
+        window.createGroup.returnToMain();
     })
 }
 
