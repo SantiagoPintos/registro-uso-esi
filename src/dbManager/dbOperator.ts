@@ -1,4 +1,5 @@
 import { Database } from 'sqlite3';
+import { debug } from '../App';
 
 export function createData(db: Database){
     const createQueryGrupo= "CREATE TABLE IF NOT EXISTS Grupo(nombre TEXT PRIMARY KEY)";
@@ -8,15 +9,15 @@ export function createData(db: Database){
     try {
         db.run(createQueryGrupo, [], function(err: Error|null){
             if (err) throw new Error(err.message);
-            console.log('Tabla grupos creada');
+            if(debug) console.log('Tabla grupos creada');
         })
         db.run(createQueryAlumnos, [], function(err: Error|null){
             if (err) throw new Error(err.message);
-            console.log('Tabla alumnos creada');
+            if(debug) console.log('Tabla alumnos creada');
         })
         db.run(createQueryRegistro, [], function(err: Error|null){
             if (err) throw new Error(err.message);
-            console.log('Tabla registro creada');
+            if(debug) console.log('Tabla registro creada');
         })
     } catch (err){
         throw new Error('Imposible crear tablas de base de datos'+ err);
@@ -31,7 +32,7 @@ export function insertGrupo(db: Database, data: Grupo): Promise<void> {
             if (err) {
                 reject(new Error(err.message));
             } else {
-                console.log('Grupo insertado');
+                if(debug) console.log('Grupo insertado');
                 resolve();
             }
         });
@@ -42,7 +43,7 @@ export function insertAlumno(db: Database, data: Alumno){
 
     db.run(insertQuery, [data.ci, data.nombre, data.grupo, data.hora], function(err: Error|null){
         if (err) throw new Error(err.message);
-        console.log('Alumno insertado');
+        if(debug) console.log('Alumno insertado');
     })
 }
 
@@ -50,7 +51,7 @@ export function insertRegistro(db:Database, data:Registro){
     const insertQuery = "INSERT INTO Registro(alumno, entrada, saluda) VALUES(?, ?, ?)";
     db.run(insertQuery, [data.alumno, data.entrada, data.salida], function (err: Error|null){
         if(err) throw new Error(err.message);
-        console.log('Registro insertado con éxito');
+        if(debug) console.log('Registro insertado con éxito');
     })
 }
 

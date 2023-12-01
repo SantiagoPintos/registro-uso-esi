@@ -1,6 +1,7 @@
 import { dialog} from 'electron'
 import fs from 'fs'
 import {databasePath} from "./dbConnection";
+import {debug} from "../App";
 
 export function databaseExporter(){
     const dialogOptions = {
@@ -18,7 +19,7 @@ export function databaseExporter(){
                 fs.copyFile(databasePath, backupRoute, (err) => {
                     if (err) {
                         dialog.showErrorBox('Error al exportar la base de datos', err.message);
-                        console.error('Error exportando la base de datos', err)
+                        if(debug) console.error('Error exportando la base de datos', err)
                     } else {
                         dialog.showMessageBox({
                             type: 'info',
@@ -26,16 +27,17 @@ export function databaseExporter(){
                             message: 'Base de datos exportada correctamente.',
                             buttons: ['OK']
                         });
-                        console.log('Base de datos exportada correctamente', backupRoute)
+                        if(debug) console.log('Base de datos exportada correctamente', backupRoute)
                     }
                 });
             } else {
                 dialog.showErrorBox('Error', 'No fue posible obtener la ruta de destino');
-                console.error('Error al obtener la ruta para exportar el archivo');
+                if(debug) console.error('Error al obtener la ruta para exportar el archivo');
             }
         }
     }).catch((err)=>{
-        console.error('Error en el cuadro de diálogo: ',err);
+        if(debug) console.error('Error en el cuadro de diálogo: ',err);
+        throw new Error(err.message);
     })
 }
 

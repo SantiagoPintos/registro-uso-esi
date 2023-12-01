@@ -2,6 +2,7 @@ import * as sqlite3 from 'sqlite3';
 import { app } from 'electron';
 import path from 'path';
 import fs from 'fs';
+import { debug } from '../App';
 
 export const databasePath = path.join(app.getPath("userData"), 'database', 'database.sqlite');
 let db: sqlite3.Database;
@@ -15,17 +16,16 @@ export function createDatabaseIfNotExists() {
       }
       fs.writeFileSync(databasePath, '');
     } catch (err) {
-      console.log('Error al crear db', err);
+      if(debug) console.log('Error al crear db', err);
+      throw new Error('Error al crear db');
     }
-  } else {
-    console.log('db ya existe');
   }
 }
 
 export function databaseConnector() {
   db = new sqlite3.Database(databasePath, (err: Error | null) => {
     if (err) throw new Error(err.message);
-    console.log('Conexion exitosa a db');
+    if(debug) console.log('Conexion exitosa a db');
   });
 
   return db;
@@ -35,8 +35,7 @@ export function closeConnection(){
     if(db!==null){
         db.close((err: Error|null) => {
             if (err) throw new Error(err.message);
-
-            console.log('Conexion a db cerrada')
+            if(debug) console.log('Conexion a db cerrada')
         })
     }
 }

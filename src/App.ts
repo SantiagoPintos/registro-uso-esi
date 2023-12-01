@@ -6,6 +6,8 @@ import { createData } from "./dbManager/dbOperator";
 import { validateData } from "./dataProcessor/dataValidator";
 import { createGroup } from "./groupManager/newGroup/newGroup";
 
+export const debug: boolean = app.isPackaged ? false : true;
+
 const createWindow = async ():Promise<void> => {
     const { width, height } = screen.getPrimaryDisplay().workAreaSize;
     const db = databaseConnector();
@@ -30,7 +32,7 @@ const createWindow = async ():Promise<void> => {
             await validateData(ci);
             return ci;
         } catch (e:any) {
-            console.error(e.message);
+            if(debug) console.error(e.message);
             return e.message;
         }
     })
@@ -42,7 +44,7 @@ const createWindow = async ():Promise<void> => {
             return name;
         }
         catch(e:any){
-            console.error(e.message);
+            if(debug) console.error(e.message);
             return e.message;
         }
     })
