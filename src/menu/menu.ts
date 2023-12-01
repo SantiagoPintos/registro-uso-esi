@@ -1,6 +1,6 @@
 import { Menu, shell, BrowserWindow } from "electron"
-import path from "path";
 import { databaseExporter} from "../dbManager/dbExporter";
+import { newGroupHTMLPath } from "../groupManager/newGroup/newGroup";
 
 export const setMainMenu = (window: BrowserWindow) => {
     const template: Array<object> = [
@@ -18,9 +18,7 @@ export const setMainMenu = (window: BrowserWindow) => {
                 {
                     label: 'Agregar grupo',
                     click: () => {
-                        window.webContents.loadFile(
-                            path.join(__dirname, "./../groupManager/newGroup/newGroup.html"),
-                        )
+                        window.webContents.loadFile(newGroupHTMLPath)
                     }
                 },
                 {
