@@ -13,8 +13,6 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    width: 100vw;
     background-color: rgb(245, 232, 234);
 }
 
@@ -26,6 +24,7 @@ body{
     width: 70vw;
     height: 70vh;
     min-width: 690px;
+    margin-top: 4.5rem;
 }
 
 .container h1{
