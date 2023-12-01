@@ -77,7 +77,7 @@ export function groupIsInDB(db: Database, name: string): Promise<void>{
                 reject(new Error(err.message));
             } else {
                 if (row && row.nombre === name.toUpperCase()) {
-                    reject(new Error('Error, el grupo ya existe'));
+                    reject(new Error('El grupo ya existe'));
                 } else {
                     resolve();
                 }

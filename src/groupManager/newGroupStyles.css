@@ -61,6 +61,12 @@ body{
     font-size: 1.2rem;
 }
 
+.container p{
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
 #btn{
     width: 40%;
     min-width: 250px;
