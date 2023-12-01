@@ -18,8 +18,8 @@ function captureDataFromHTML(): string{
 }
 
 async function sendData(name: string): Promise<void>{
-    if(name != "" && name != null){
-        const res = await window.createGroup.sendGroupToMain(name);
+    if(name.trim() != "" && name != null){
+        const res = await window.createGroup.sendGroupToMain(name.toUpperCase());
         renderResponse(res);
     }
 }
