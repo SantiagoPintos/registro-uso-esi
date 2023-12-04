@@ -29,7 +29,7 @@ const createWindow = async ():Promise<void> => {
     //receive string (ci) from renderer process
     ipcMain.handle("ci", async (_event:Electron.IpcMainInvokeEvent, ci: string): Promise<string|undefined> => {
         try{
-            await validateData(ci);
+            validateData(ci);
             return ci;
         } catch (e:any) {
             if(debug) console.error(e.message);
