@@ -3,7 +3,7 @@ export {};
 declare global {
     interface Window {
       ciTransfer: ciTransfer;
-      createGroup: createGroup;
+      groupManager: groupManager;
     }
 
     interface ciTransfer {

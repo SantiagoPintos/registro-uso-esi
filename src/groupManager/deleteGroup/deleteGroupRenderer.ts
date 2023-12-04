@@ -15,7 +15,7 @@ function load(){
 }
 
 async function populateSelect(): Promise<void> {
-    const list: string[]|undefined = await window.createGroup.getAllGroups();
+    const list: string[]|undefined = await window.groupManager.getAllGroups();
     const container = document.querySelector("#container") as HTMLDivElement;
     if(list != undefined && list.length > 0){
         const select = document.querySelector("#list") as HTMLSelectElement;
@@ -40,7 +40,7 @@ function captureGroupName(): string{
 
 async function sendToMain(name: string): Promise<void>{
     if(name.trim() != "" && name != null){
-        const res: string = await window.createGroup.deleteGroup(name);
+        const res: string = await window.groupManager.deleteGroup(name);
         renderResponseFromMain(res);
     }
 }

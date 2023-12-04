@@ -12,7 +12,7 @@ contextBridge.exposeInMainWorld('ciTransfer', {
     }
 });
 
-contextBridge.exposeInMainWorld('createGroup', {
+contextBridge.exposeInMainWorld('groupManager', {
     getAllGroups: async (): Promise<string[]|undefined> => {
         try{
             return await ipcRenderer.invoke("getAllGroups");

@@ -12,7 +12,7 @@ function initial(): void{
         sendData(captureDataFromHTML());
     })
     btnCancelar.addEventListener("click", () => {
-        window.createGroup.returnToMain();
+        window.groupManager.returnToMain();
     })
 }
 
@@ -23,7 +23,7 @@ function captureDataFromHTML(): string{
 
 async function sendData(name: string): Promise<void>{
     if(name.trim() != "" && name != null){
-        const res = await window.createGroup.sendGroupToMain(name.toUpperCase());
+        const res = await window.groupManager.sendGroupToMain(name.toUpperCase());
         renderResponse(res);
     }
 }
