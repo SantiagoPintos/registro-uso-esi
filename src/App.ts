@@ -1,10 +1,11 @@
 import { app, BrowserWindow, screen, ipcMain } from "electron";
 import path from "path";
 import { setMainMenu } from "./menu/menu"
-import { databaseConnector, closeConnection, createDatabaseIfNotExists } from "./dbManager/dbConnection";
-import { createData } from "./dbManager/dbOperator";
+import { databaseConnector, closeConnection, createDatabaseIfNotExists} from "./dbManager/dbConnection";
+import { createData, getAllGroups  } from "./dbManager/dbOperator";
 import { validateData } from "./dataProcessor/dataValidator";
 import { createGroup } from "./groupManager/newGroup/newGroup";
+import { deleteGroup } from "./groupManager/deleteGroup/deleteGroup";
 
 export const debug: boolean = app.isPackaged ? false : true;
 
@@ -42,6 +43,30 @@ const createWindow = async ():Promise<void> => {
         try{
             await createGroup(name);
             return name;
+        }
+        catch(e:any){
+            if(debug) console.error(e.message);
+            return e.message;
+        }
+    })
+
+    ipcMain.handle("deleteGroup", async (_event: Electron.IpcMainInvokeEvent, name: string): Promise<string|undefined> => {
+        try{
+            await deleteGroup(name);
+            return name;
+        }
+        catch(e:any){
+            if(debug) console.error(e.message);
+            return e.message;
+        }
+    })
+
+    ipcMain.handle("getAllGroups", async (): Promise<string[]|undefined> => {
+        try{
+            const db = databaseConnector();
+            const groups = await getAllGroups(db);
+            closeConnection();
+            return groups;
         }
         catch(e:any){
             if(debug) console.error(e.message);

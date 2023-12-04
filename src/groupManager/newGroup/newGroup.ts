@@ -22,6 +22,6 @@ export async function createGroup(name: string): Promise<void> {
     }
 }
 
-function validateData(name: string): void {
+export function validateData(name: string): void {
     if (name.match(/[^0-9a-z]/gi) || name.trim() === "" || name === null) throw new Error("Nombre de grupo inválido");
 }

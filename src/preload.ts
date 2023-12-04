@@ -13,6 +13,15 @@ contextBridge.exposeInMainWorld('ciTransfer', {
 });
 
 contextBridge.exposeInMainWorld('createGroup', {
+    getAllGroups: async (): Promise<string[]|undefined> => {
+        try{
+            return await ipcRenderer.invoke("getAllGroups");
+        }
+        catch(e:any){
+            console.error(e.message);
+            return e.message;
+        }
+    },
     sendGroupToMain: async (name: string): Promise<string|undefined> => {
         try{
             return await ipcRenderer.invoke("createGroup", name);
@@ -24,5 +33,14 @@ contextBridge.exposeInMainWorld('createGroup', {
     },
     returnToMain: (): void => {
         ipcRenderer.send("returnToMain");
+    },
+    deleteGroup: async (name: string): Promise<string|undefined> =>{
+        try{
+            return await ipcRenderer.invoke("deleteGroup", name);
+        }
+        catch(e:any){
+            console.error(e.message);
+            return e.message;
+        }
     }
 });

@@ -86,3 +86,34 @@ export function groupIsInDB(db: Database, name: string): Promise<void>{
         });
     });
 }
+
+export async function deleteGroupFromDB(db: Database, name: string): Promise<void>{
+    return new Promise((resolve, reject) => {
+        const deleteQuery = "DELETE FROM Grupo WHERE nombre = ?";
+        db.run(deleteQuery, [name.toUpperCase()], function(err: Error|null){
+            if(err){
+                reject(new Error(err.message));
+            } else {
+                if(debug) console.log('Grupo eliminado');
+                resolve();
+            }
+        })
+    })
+}
+
+export async function getAllGroups(db: Database): Promise<string[]>{
+    return new Promise((resolve, reject) => {
+        const selectQuery = "SELECT nombre FROM Grupo";
+        const result: string[] = [];
+        db.all(selectQuery, [], function(err: Error|null, rows: any){
+            if(err){
+                reject(new Error(err.message));
+            } else {
+                rows.forEach((row: any) => {
+                    result.push(row.nombre);
+                });
+                resolve(result);
+            }
+        })
+    })
+}

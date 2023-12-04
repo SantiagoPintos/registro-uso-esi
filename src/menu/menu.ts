@@ -1,6 +1,7 @@
 import { Menu, shell, BrowserWindow } from "electron"
 import { databaseExporter} from "../dbManager/dbExporter";
 import { newGroupHTMLPath } from "../groupManager/newGroup/newGroup";
+import { deleteGroupHTMLPath } from "../groupManager/deleteGroup/deleteGroup";
 
 export const setMainMenu = (window: BrowserWindow) => {
     const template: Array<object> = [
@@ -19,6 +20,12 @@ export const setMainMenu = (window: BrowserWindow) => {
                     label: 'Agregar grupo',
                     click: () => {
                         window.webContents.loadFile(newGroupHTMLPath)
+                    }
+                },
+                {
+                    label: 'Eliminar grupo',
+                    click: () => {
+                        window.webContents.loadFile(deleteGroupHTMLPath)
                     }
                 },
                 {
