@@ -3,7 +3,7 @@ import { debug } from '../App';
 
 export function createData(db: Database){
     const createQueryGrupo= "CREATE TABLE IF NOT EXISTS Grupo(nombre TEXT PRIMARY KEY)";
-    const createQueryAlumnos = "CREATE TABLE IF NOT EXISTS alumnos (ci TEXT PRIMARY KEY, nombre TEXT NOT NULL, grupo TEXT, FOREIGN KEY(grupo) REFERENCES Grupo(nombre))";
+    const createQueryAlumnos = "CREATE TABLE IF NOT EXISTS alumnos (ci TEXT PRIMARY KEY, nombre TEXT NOT NULL, apellido TEXT NOT NULL, grupo TEXT, FOREIGN KEY(grupo) REFERENCES Grupo(nombre))";
     const createQueryRegistro= "CREATE TABLE IF NOT EXISTS registro (alumno TEXT PRIMARY KEY, entrada DATETIME NOT NULL, salida DATETIME NOT NULL, FOREIGN KEY (alumno) REFERENCES alumnos(ci))";
 
     try {
@@ -38,12 +38,24 @@ export function insertGrupo(db: Database, data: Grupo): Promise<void> {
         });
     });
 }
-export function insertAlumno(db: Database, data: Alumno){
-    const insertQuery = "INSERT INTO alumno (ci, nombre, grupo, hora) VALUES (?, ?, ?, ?)";
 
-    db.run(insertQuery, [data.ci, data.nombre, data.grupo, data.hora], function(err: Error|null){
-        if (err) throw new Error(err.message);
-        if(debug) console.log('Alumno insertado');
+export async function insertAlumnoInDB(db: Database, data: Alumno): Promise<void>{
+    //check if already is in database
+    if(isInDB(db, data.ci)){
+        return new Promise((resolve, reject) => {
+            reject(new Error('El alumno ya existe'));
+        })
+    }
+    return new Promise((resolve, reject) => {
+        const insertQuery = "INSERT INTO alumnos(ci, nombre, apellido, grupo) VALUES(?, ?, ?, ?)";
+        db.run(insertQuery, [data.ci, data.nombre, data.apellido, data.grupo], function(err: Error|null){
+            if(err){
+                reject(new Error(err.message));
+            } else {
+                if(debug) console.log('Alumno insertado');
+                resolve();
+            }
+        })
     })
 }
 
@@ -117,3 +129,5 @@ export async function getAllGroups(db: Database): Promise<string[]>{
         })
     })
 }
+
+

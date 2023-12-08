@@ -15,3 +15,7 @@ export function validateData(ci: string):void{
         closeConnection();
     }
 }
+
+export function validateNames(name: string, errMsg: string = "Nombre de grupo inválido"): void {
+    if (name.match(/[^0-9a-z]/gi) || name.trim() === "" || name === null) throw new Error(errMsg);
+}

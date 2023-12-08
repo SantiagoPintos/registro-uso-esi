@@ -44,3 +44,14 @@ contextBridge.exposeInMainWorld('groupManager', {
         }
     }
 });
+
+contextBridge.exposeInMainWorld('studentManager', {
+    sendStudentToMain: async (data: {name: string, ap: string, ci: string}): Promise<string|undefined> => {
+        try{
+            return await ipcRenderer.invoke("createStudent", data);
+        }catch(e:any){
+            console.error(e.message);
+            return e.message;
+        }
+    }
+});

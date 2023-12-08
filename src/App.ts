@@ -6,6 +6,7 @@ import { createData, getAllGroups  } from "./dbManager/dbOperator";
 import { validateData } from "./dataProcessor/dataValidator";
 import { createGroup } from "./groupManager/newGroup/newGroup";
 import { deleteGroup } from "./groupManager/deleteGroup/deleteGroup";
+import { addAlumno, convertToAlumno } from "./studentManager/newStudent/newStudent";
 
 export const debug: boolean = app.isPackaged ? false : true;
 
@@ -76,6 +77,17 @@ const createWindow = async ():Promise<void> => {
 
     ipcMain.on("returnToMain", () => {
         win.loadFile(path.join(__dirname, "index.html"));
+    })
+
+    ipcMain.handle("createStudent", async (_event: Electron.IpcMainInvokeEvent, data: {name: string, ap: string, ci: string, group: string}): Promise<string|undefined> => {
+        const alumno = convertToAlumno(data);
+        try{
+            await addAlumno(alumno);
+            return `Alumno ${alumno.nombre} ${alumno.apellido} agregado con éxito`;
+        } catch (e:any) {
+            if(debug) console.error(e.message);
+            return e.message;
+        }
     })
 };
 
