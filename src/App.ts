@@ -25,7 +25,7 @@ const createWindow = async ():Promise<void> => {
     });
 
     win.loadFile(path.join(__dirname, "index.html"));
-    win.webContents.openDevTools();
+    if(debug) win.webContents.openDevTools()
     setMainMenu(win);
 
     //receive string (ci) from renderer process
