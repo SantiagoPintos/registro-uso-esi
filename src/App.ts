@@ -75,7 +75,7 @@ const createWindow = async ():Promise<void> => {
         }
     })
 
-    ipcMain.on("returnToMain", () => {
+    ipcMain.handle("returnToMain", () => {
         win.loadFile(path.join(__dirname, "index.html"));
     })
 

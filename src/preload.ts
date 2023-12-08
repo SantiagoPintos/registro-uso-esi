@@ -32,7 +32,7 @@ contextBridge.exposeInMainWorld('groupManager', {
         }
     },
     returnToMain: (): void => {
-        ipcRenderer.send("returnToMain");
+        ipcRenderer.invoke("returnToMain");
     },
     deleteGroup: async (name: string): Promise<string|undefined> =>{
         try{
