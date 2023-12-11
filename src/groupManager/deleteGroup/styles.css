@@ -43,22 +43,32 @@ body{
 
 #container input[type="button"]{
     margin-top: 20px;
-    width: 100px;
+    width: 10rem;
+    min-width: 100px;
     height: 30px;
     border-radius: 5px;
-    border: none;
-    background-color: black;
-    color: white;
     font-size: 15px;
     font-weight: bold;
     cursor: pointer;
+    border: 1px solid black;
+}
+
+#btnEliminar{
+    background-color: black;
+    color: white;
+}
+
+#btnCancelar{
+    color: black;
 }
 
 #container select{
     min-width: 50px;
     border: 1px solid black;
     border-radius: 5px;
+    margin-top: 1rem;
 }
+
 
 p{
     text-align: center;

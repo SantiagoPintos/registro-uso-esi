@@ -12,6 +12,11 @@ function load(){
     btn.addEventListener("click", () => {
         sendToMain(captureGroupName());
     });
+
+    const btnCancel = document.querySelector("#btnCancelar") as HTMLButtonElement;
+    btnCancel.addEventListener("click", () => {
+        window.groupManager.returnToMain();
+    });
 }
 
 async function populateSelect(): Promise<void> {
