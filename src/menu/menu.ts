@@ -1,4 +1,4 @@
-import { Menu, shell, BrowserWindow } from "electron"
+import { Menu, BrowserWindow } from "electron"
 import { databaseExporter} from "../dbManager/dbExporter";
 import { newGroupHTMLPath } from "../groupManager/newGroup/newGroup";
 import { deleteGroupHTMLPath } from "../groupManager/deleteGroup/deleteGroup";
@@ -7,15 +7,25 @@ import { newStudentHTMLPath } from "../studentManager/newStudent/newStudent";
 export const setMainMenu = (window: BrowserWindow) => {
     const template: Array<object> = [
         {
-            label: 'Horarios',
+            label: 'Configuración',
             submenu: [
-                { role: 'about' },
+                { 
+                    role: 'togglefullscreen',
+                    label: 'Pantalla completa' 
+                },
                 { type: 'separator' },
-                { role: 'quit' }
+                { 
+                    role: 'reload',
+                    label: 'Recargar la aplicación' 
+                },
+                { 
+                    role: 'quit',
+                    label: 'Salir' 
+                }
             ],
         },
         {
-            label: 'Utilidades',
+            label: 'Administración',
             submenu: [
                 {
                     label: 'Agregar grupo',
@@ -35,28 +45,10 @@ export const setMainMenu = (window: BrowserWindow) => {
                         window.webContents.loadFile(newStudentHTMLPath)
                     }
                 },
+                { type: 'separator' },
                 {
                     label: 'Exportar base de datos',
                     click: () => { databaseExporter() }
-                }
-            ]
-        },
-        {
-            label: 'View',
-            submenu: [
-              { role: 'reload' },
-              { type: 'separator' },
-              { role: 'togglefullscreen' }
-            ] 
-        },
-        {
-            label: 'Read more',
-            submenu: [
-                {
-                    label: 'Click to read more about Electron',
-                    click:async () => {
-                        await shell.openExternal('https://electronjs.org')
-                    }                        
                 }
             ]
         }
