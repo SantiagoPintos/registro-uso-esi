@@ -2,11 +2,13 @@ import { app, BrowserWindow, screen, ipcMain } from "electron";
 import path from "path";
 import { setMainMenu } from "./menu/menu"
 import { databaseConnector, closeConnection, createDatabaseIfNotExists} from "./dbManager/dbConnection";
-import { createData, getAllGroups  } from "./dbManager/dbOperator";
+import { createData, getAllGroups } from "./dbManager/dbOperator";
 import { validateData } from "./dataProcessor/dataValidator";
 import { createGroup } from "./groupManager/newGroup/newGroup";
 import { deleteGroup } from "./groupManager/deleteGroup/deleteGroup";
 import { addAlumno, convertToAlumno } from "./studentManager/newStudent/newStudent";
+import { getStudentFromCi } from "./studentManager/utils/getStudentFromCI";
+import { deleteStudent } from "./studentManager/deleteStudent/deleteStudent";
 
 export const debug: boolean = app.isPackaged ? false : true;
 
@@ -89,7 +91,27 @@ const createWindow = async ():Promise<void> => {
             return e.message;
         }
     })
-};
+
+    ipcMain.handle("getStudentFromCi", async (_event: Electron.IpcMainInvokeEvent, ci: string): Promise<Alumno|undefined> => {
+        try {
+            return await getStudentFromCi(ci);
+        } catch (e:any) {
+            if(debug) console.error(e.message);
+            //send error message to renderer process
+            win.webContents.send('getStudentFromCiError', e.message);
+        }
+    })
+
+    ipcMain.handle("deleteStudent", async (_event: Electron.IpcMainInvokeEvent, ci: string): Promise<string|undefined> => {
+        try {
+            const res: string|undefined = await deleteStudent(ci);
+            return res;
+        } catch (e:any) {
+            if(debug) console.error(e.message);
+            return e.message;
+        }
+    });
+}
 
 app.whenReady().then(() => {
     createDatabaseIfNotExists();

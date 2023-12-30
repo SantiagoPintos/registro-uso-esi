@@ -3,6 +3,7 @@ import { databaseExporter} from "../dbManager/dbExporter";
 import { newGroupHTMLPath } from "../groupManager/newGroup/newGroup";
 import { deleteGroupHTMLPath } from "../groupManager/deleteGroup/deleteGroup";
 import { newStudentHTMLPath } from "../studentManager/newStudent/newStudent";
+import { deleteStudentHTMLPath } from "../studentManager/deleteStudent/deleteStudent";
 
 export const setMainMenu = (window: BrowserWindow) => {
     const template: Array<object> = [
@@ -43,6 +44,12 @@ export const setMainMenu = (window: BrowserWindow) => {
                     label: 'Agregar alumnos',
                     click: () => {
                         window.webContents.loadFile(newStudentHTMLPath)
+                    }
+                },
+                {
+                    label: 'Eliminar alumnos',
+                    click: () => {
+                        window.webContents.loadFile(deleteStudentHTMLPath)
                     }
                 },
                 { type: 'separator' },

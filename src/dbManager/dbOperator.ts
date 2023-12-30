@@ -130,4 +130,40 @@ export async function getAllGroups(db: Database): Promise<string[]>{
     })
 }
 
+export async function getAlumnoFromCi(ci: string, db: Database): Promise<Alumno>{
+    return new Promise((resolve, reject) => {
+        const selectQuery = "SELECT * FROM alumnos WHERE ci = ?";
+        db.get(selectQuery, [ci], function(err: Error|null, row: any){
+            if(err){
+                reject(new Error(err.message));
+            } else {
+                if(row){
+                    const alumno: Alumno = {
+                        nombre: row.nombre,
+                        apellido: row.apellido,
+                        ci: row.ci,
+                        grupo: row.grupo
+                    }
+                    resolve(alumno);
+                } else {
+                    reject(new Error('Alumno no encontrado'));
+                }
+            }
+        })
+    })
+}
+
+export async function deleteStudentFromDB(db: Database, ci: string): Promise<void>{
+    return new Promise((resolve, reject) => {
+        const deleteQuery = "DELETE FROM alumnos WHERE ci = ?";
+        db.run(deleteQuery, [ci], function(err: Error|null){
+            if(err){
+                reject(new Error(err.message));
+            } else {
+                if(debug) console.log(`Alumno ${ci} eliminado`);
+                resolve()
+            }
+        });
+    });
+}
 

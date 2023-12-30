@@ -1,0 +1,86 @@
+@font-face {
+    font-family: 'Poppins';
+    src: url('./../../fonts/Poppins/Poppins-Medium.ttf') format('truetype');
+}
+
+*{
+    margin: 0;
+    border: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body{
+    background-color: rgb(245, 232, 234);
+}
+
+#container{
+    margin: 4rem auto 0 auto;
+    height: 80vh;
+    width: 80vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 1rem;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+
+h1{
+    text-align: center;
+    margin: 20px 0;
+}
+
+.formContainer{
+    width: 30%;
+    margin: 0 auto;
+    font-size: 20px;
+}
+
+#searchContainer input[type="text"]{
+    width: 48%;
+    padding: 0.5rem;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    min-width: 250px;
+    font-size: 1.2rem;
+}
+
+#searchContainer input[type="button"],
+.btn{
+    width: 40%;
+    height: 40px;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 0 5px;
+    margin: 10px;
+    cursor: pointer;
+}
+
+label{
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    width: 50%;
+    min-width: 250px;
+    padding: 0.5rem 0;
+}
+
+#confirm input[type="text"]{
+    width: 49%;
+    background-color: white;
+    color: black;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    min-width: 250px;
+    font-size: 1.2rem;
+    padding: 0.5rem;
+}
+
+#msg{
+    font-size: 1.2rem;
+}

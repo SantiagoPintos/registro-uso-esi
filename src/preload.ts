@@ -53,5 +53,23 @@ contextBridge.exposeInMainWorld('studentManager', {
             console.error(e.message);
             return e.message;
         }
-    }
+    },
+    getStudentFromCi: async(ci: string): Promise<Alumno> =>{
+        try{
+            return await ipcRenderer.invoke("getStudentFromCi", ci); 
+        } catch(e:any) {
+            console.error(e.message);
+            throw new Error(e.message);
+        }
+    },
+    deleteStudentFromDatabase: async (ci: string): Promise<string|undefined> => {
+        try{
+            return await ipcRenderer.invoke("deleteStudent", ci);
+        }catch(e:any) {
+            console.error(e.message);
+            return e.message;
+        }
+    },
+    //error msg from main process
+    onGetStudentFromCiError: (callback: (arg: any) => void) => ipcRenderer.on('getStudentFromCiError', (_event, value) => callback(value)),
 });

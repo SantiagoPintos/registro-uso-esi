@@ -16,5 +16,9 @@ declare global {
 
     interface studentManager{
         sendStudentToMain: (data: {name: string, ap: string, ci: string}) => string;
+        getStudentFromCi: (ci: string) => Alumno;
+        onGetStudentFromCiError: (callback: (msg: string) => void) => void
+        deleteStudentFromDatabase: (ci: string) => string|undefined;
     }
+
   }

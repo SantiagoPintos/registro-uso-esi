@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eliminar estudiante</title>
+    <script defer src="deleteStudentRenderer.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="container">
+        <h1>Eliminar estudiante</h1>
+        <div id="searchContainer" class="formContainer">
+            <label for="ci">Cédula:</label>
+            <br>
+            <input type="text" name="ci" id="ci" required autofocus>
+            <br>
+            <input type="button" value="Cancelar" id="btnCancelar" class="btn btn-cancel">
+            <input type="button" value="Buscar" id="btnBuscar" class="btn">
+        </div>
+        <div id="confirm" class="formContainer">
+            <label for="name">Nombre:</label>
+            <input type="text" name="name" id="name" disabled>
+            <br>
+            <label for="ap">Apellido:</label>
+            <input type="text" name="ap" id="ap" disabled>
+            <br>
+            <label for="ciConfirm">CI:</label>
+            <input type="text" name="ciConfirm" id="ciConfirm" disabled>
+            <br>
+            <label for="group">Grupo:</label>
+            <input type="text" name="group" id="group" disabled>
+            <br>
+            <div id="confirmContainer">
+                <input type="button" value="Cancelar" id="btnCancelarConfirm" class="btn btn-cancel">
+                <input type="button" value="Eliminar" id="btnEliminar" class="btn">
+            </div>
+        </div>
+        <div id="msgContainer">
+            <p id="msg"></p>
+        </div>
+    </div>
+</body>
+</html>
