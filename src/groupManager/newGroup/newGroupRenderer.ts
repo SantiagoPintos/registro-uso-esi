@@ -22,9 +22,13 @@ function captureDataFromHTML(): string{
 }
 
 async function sendData(name: string): Promise<void>{
-    if(name.trim() != "" && name != null){
+    if(name.trim().toUpperCase() != "" && name != null){
         const res = await window.groupManager.sendGroupToMain(name.toUpperCase());
-        renderResponse(res);
+        if(res === name.trim().toUpperCase()){
+            renderResponse(`Grupo ${name} guardado con éxito`);
+        } else {
+            renderResponse(res);
+        }
     }
 }
 
