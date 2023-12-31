@@ -29,7 +29,6 @@ body{
     border-radius: 1rem;
     background-color: white;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-    padding-top: 5rem;
 }
 
 #container h1{
@@ -42,10 +41,10 @@ body{
 }
 
 #container input[type="button"]{
-    margin-top: 20px;
+    margin: 20px 10px 0; 
     width: 10rem;
     min-width: 100px;
-    height: 30px;
+    height: 40px;
     border-radius: 5px;
     font-size: 15px;
     font-weight: bold;
@@ -60,6 +59,7 @@ body{
 
 #btnCancelar{
     color: black;
+    background-color: white;
 }
 
 #container select{
@@ -74,5 +74,5 @@ p{
     text-align: center;
     font-size: 20px;
     font-weight: bold;
-    margin-top: 15rem;
+    margin-top: 5rem;
 }

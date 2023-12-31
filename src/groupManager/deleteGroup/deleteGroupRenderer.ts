@@ -44,17 +44,24 @@ function captureGroupName(): string{
 }
 
 async function sendToMain(name: string): Promise<void>{
-    if(name.trim() != "" && name != null){
+    if(name.trim().toUpperCase() != "" && name != null){
         const res: string = await window.groupManager.deleteGroup(name);
-        renderResponseFromMain(res);
+        if(res === name.trim().toUpperCase()){
+            renderResponseFromMain(`Grupo ${name} eliminado con éxito`);
+        } else {
+            renderResponseFromMain(res);
+        }
     }
 }
 
 function renderResponseFromMain(res: string){
     const p = document.querySelector("#msg") as HTMLParagraphElement;
     p.innerHTML = res;
-    //wait 3 secs and refresh the page
+    refresh();
+}
+
+function refresh():void{
     setTimeout(() => {
         window.location.reload();
-    }, 3000);
+    }, 1500);
 }

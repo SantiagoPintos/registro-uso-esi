@@ -61,6 +61,8 @@ h1{
     padding: 0 5px;
     margin: 10px 0;
     cursor: pointer;
+    background-color: white;
+    color: black;
 }
 
 label{
@@ -84,8 +86,8 @@ label{
 }
 
 .btn-cancel{
-    background-color: black;
-    color: white;
+    background-color: black !important; 
+    color: white !important;
 }
 
 #msg{
