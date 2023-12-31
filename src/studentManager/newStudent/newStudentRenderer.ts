@@ -62,22 +62,18 @@ async function sendDataToDB(data: {name: string, ap: string, ci: string, group: 
         return;
     } else {
         const res = await window.studentManager.sendStudentToMain(data);
-        /*
-            if "res" contains the text "SQLITE_CONSTRAINT: UNIQUE" we should render that the alumno already exists in database,
-            if "res" contains the text "SQLITE_ERROR" we should render that something is wrong with the database
-        */
-        if(res.includes("SQLITE_CONSTRAINT")) {
-            renderRes("El alumno ya existe en la base de datos");
-        } else if(res.includes("SQLITE_ERROR")) {
-            renderRes("No se pudo guardar, algo salió mal con la base de datos");
-        }
+        renderRes(res);
     }
 }
 
 function renderRes(res: string): void{
     const p = document.querySelector("#msg") as HTMLParagraphElement;
-    /* If res contains the text "SQLITE_CONSTRAINT: UNIQUE" we should render that the alumno already exists in database */
-    if(res.includes("SQLITE_CONSTRAINT: UNIQUE")) res = "El alumno ya existe en la base de datos";
+    if(res.includes("SQLITE_CONSTRAINT")) {
+        res = "El alumno ya existe en la base de datos";
+    } else if(res.includes("SQLITE_ERROR")) {
+        res = "No se pudo guardar, algo salió mal con la base de datos";
+    }
+
     p.innerHTML = res;
 }
 
