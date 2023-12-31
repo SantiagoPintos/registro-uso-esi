@@ -32,7 +32,6 @@ function setup():void {
 
     /* render the error message from main process */
     window.studentManager.onGetStudentFromCiError((msg: string) => {
-        console.log(msg);
         renderErrorMsg(msg);
     });
 }
@@ -46,7 +45,6 @@ function renderAlumnoData(alumno: Alumno):void {
     const container = document.querySelector("#confirm") as HTMLDivElement;
     container.style.display = "block";
     globalCI=alumno.ci;
-    console.log(alumno);
     const name = document.querySelector("#name") as HTMLInputElement;
     name.value = alumno.nombre;
     const ap = document.querySelector("#ap") as HTMLInputElement;
@@ -63,6 +61,8 @@ function renderErrorMsg(msg: string):void{
 
     const errorMsg = document.querySelector("#msg") as HTMLLabelElement;
     errorMsg.innerHTML = msg;
+
+    refreshPage();
 }
 
 async function getAlumnoData(ci: string):Promise<Alumno|undefined>{
@@ -85,9 +85,10 @@ function renderConfirmationMsg(msg: string):void{
     const div = document.querySelector("#msgContainer") as HTMLDivElement;
     div.style.display = "block";
 
-    console.log(msg);
     const errorMsg = document.querySelector("#msg") as HTMLLabelElement;
     errorMsg.innerHTML = msg;
+
+    refreshPage();
 }
 
 async function deleteStudent():Promise<void>{
@@ -105,3 +106,8 @@ async function deleteStudent():Promise<void>{
     }
 }
 
+function refreshPage(): void {
+    setTimeout(() => {
+        location.reload();
+    }, 1000);
+}
