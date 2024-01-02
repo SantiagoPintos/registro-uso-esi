@@ -31,7 +31,7 @@ function setDate(): void {
     const date: Date = new Date();
     const minutes: string = date.getMinutes().toString().padStart(2, '0');
     const hour: string = `${date.getHours().toString().padStart(2, '0')}:${minutes}`;
-    const day: string = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
+    const day: string = `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`;
     (document.querySelector("#hour") as HTMLElement).innerHTML = hour;
     (document.querySelector("#date") as HTMLElement).innerHTML = day;
 }
