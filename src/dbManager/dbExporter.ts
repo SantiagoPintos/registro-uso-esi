@@ -7,6 +7,7 @@ export function databaseExporter(){
     const dialogOptions = {
         title: 'Seleccione ubicación para exportar la base de datos',
         buttonLabel: 'Exportar',
+        defaultPath: 'registro.sqlite',
         filters: [
             { name: 'Archivos sqlite', extensions: ['sqlite']},
         ]
