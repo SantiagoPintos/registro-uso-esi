@@ -40,14 +40,15 @@ export const setMainMenu = (window: BrowserWindow) => {
                         window.webContents.loadFile(deleteGroupHTMLPath)
                     }
                 },
+                { type: 'separator' },
                 {
-                    label: 'Agregar alumnos',
+                    label: 'Agregar alumno',
                     click: () => {
                         window.webContents.loadFile(newStudentHTMLPath)
                     }
                 },
                 {
-                    label: 'Eliminar alumnos',
+                    label: 'Eliminar alumno',
                     click: () => {
                         window.webContents.loadFile(deleteStudentHTMLPath)
                     }
