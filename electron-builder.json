@@ -2,12 +2,16 @@
     "appId": "com.esi.registrouso",
     "productName": "ts",
     "files": [
+        "./dist/fonts/*/*.ttf",
         "./dist/*.js",
         "./dist/*/*.js",
         "./dist/*/*/*.js",
         "./dist/index.html",
+        "./dist/*/*.html",
+        "./dist/*/*/*.html",
         "./dist/*.css",
-        "./dist/database/database.sqlite"
+        "./dist/*/*.css",
+        "./dist/*/*/*.css"
     ],
     "directories": {
         "output": "build"
