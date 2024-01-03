@@ -1,5 +1,6 @@
 import { Database } from 'sqlite3';
-import { debug } from '../App';
+import Logger from '../logger/logger';
+const logger = new Logger('dbOperator.log');
 
 export function createData(db: Database){
     const createQueryGrupo= "CREATE TABLE IF NOT EXISTS Grupo(nombre TEXT PRIMARY KEY)";
@@ -8,18 +9,25 @@ export function createData(db: Database){
 
     try {
         db.run(createQueryGrupo, [], function(err: Error|null){
-            if (err) throw new Error(err.message);
-            if(debug) console.log('Tabla grupos creada');
+            if (err) {
+                logger.log('Error al crear la tabla de grupos: ' + err.message);
+                throw new Error(err.message);
+            }
         })
         db.run(createQueryAlumnos, [], function(err: Error|null){
-            if (err) throw new Error(err.message);
-            if(debug) console.log('Tabla alumnos creada');
+            if (err) {
+                logger.log('Error al crear la tabla de alumnos: ' + err.message);
+                throw new Error(err.message);
+            }
         })
         db.run(createQueryRegistro, [], function(err: Error|null){
-            if (err) throw new Error(err.message);
-            if(debug) console.log('Tabla registro creada');
+            if (err) {
+                logger.log('Error al crear la tabla de registro: ' + err.message);
+                throw new Error(err.message);
+            }
         })
-    } catch (err){
+    } catch (err:any){
+        logger.log('Error al crear las tablas de la base de datos: ' + err.message);
         throw new Error('Imposible crear tablas de base de datos'+ err);
     }
 
@@ -30,9 +38,9 @@ export function insertGrupo(db: Database, data: Grupo): Promise<void> {
         const insertQuery = "INSERT INTO Grupo(nombre) VALUES (?)";
         db.run(insertQuery, [data.nombre], function (err: Error | null) {
             if (err) {
-                reject(new Error(err.message));
+                logger.log('Error al insertar grupo en la base de datos: ' + err.message);
+                reject(new Error(err.message))
             } else {
-                if(debug) console.log('Grupo insertado');
                 resolve();
             }
         });
@@ -50,9 +58,9 @@ export async function insertAlumnoInDB(db: Database, data: Alumno): Promise<void
         const insertQuery = "INSERT INTO alumnos(ci, nombre, apellido, grupo) VALUES(?, ?, ?, ?)";
         db.run(insertQuery, [data.ci, data.nombre, data.apellido, data.grupo], function(err: Error|null){
             if(err){
+                logger.log('Error al insertar alumno en la base de datos: ' + err.message);
                 reject(new Error(err.message));
             } else {
-                if(debug) console.log('Alumno insertado');
                 resolve();
             }
         })
@@ -63,7 +71,6 @@ export function insertRegistro(db:Database, data:Registro){
     const insertQuery = "INSERT INTO Registro(alumno, entrada, saluda) VALUES(?, ?, ?)";
     db.run(insertQuery, [data.alumno, data.entrada, data.salida], function (err: Error|null){
         if(err) throw new Error(err.message);
-        if(debug) console.log('Registro insertado con éxito');
     })
 }
 
@@ -72,11 +79,15 @@ export function isInDB(db: Database, ci: string): boolean{
     let result: boolean = false;
     try{
         db.get(selectQuery, [ci], function(err: Error|null, row: any){
-        if(err) throw new Error(err.message);
+        if(err) {
+            logger.log('Error en método isInDB: ' + err.message);
+            throw new Error(err.message)
+        }
         if(row) result = true;
     })
     }
-    catch(err){
+    catch(err:any){
+        logger.log('Error al buscar en la base de datos: ' + err.message);
         throw new Error('Error al buscar en la base de datos');
     }
     return result;
@@ -87,6 +98,7 @@ export function groupIsInDB(db: Database, name: string): Promise<void>{
         const selectQuery = "SELECT nombre FROM Grupo WHERE nombre = ?";
         db.get(selectQuery, [name.toUpperCase()], function(err: Error|null, row: any) {
             if (err) {
+                logger.log('Error en groupIsInDB: ' + err.message);
                 reject(new Error(err.message));
             } else {
                 if (row && row.nombre === name.toUpperCase()) {
@@ -104,9 +116,9 @@ export async function deleteGroupFromDB(db: Database, name: string): Promise<voi
         const deleteQuery = "DELETE FROM Grupo WHERE nombre = ?";
         db.run(deleteQuery, [name.toUpperCase()], function(err: Error|null){
             if(err){
+                logger.log('Error al eliminar grupo de la base de datos: ' + err.message);
                 reject(new Error(err.message));
             } else {
-                if(debug) console.log('Grupo eliminado');
                 resolve();
             }
         })
@@ -119,6 +131,7 @@ export async function getAllGroups(db: Database): Promise<string[]>{
         const result: string[] = [];
         db.all(selectQuery, [], function(err: Error|null, rows: any){
             if(err){
+                logger.log('Error al obtener todos los grupos de la base de datos: ' + err.message);
                 reject(new Error(err.message));
             } else {
                 rows.forEach((row: any) => {
@@ -135,6 +148,7 @@ export async function getAlumnoFromCi(ci: string, db: Database): Promise<Alumno>
         const selectQuery = "SELECT * FROM alumnos WHERE ci = ?";
         db.get(selectQuery, [ci], function(err: Error|null, row: any){
             if(err){
+                logger.log('Error al obtener alumno de la base de datos: ' + err.message);
                 reject(new Error(err.message));
             } else {
                 if(row){
@@ -158,9 +172,9 @@ export async function deleteStudentFromDB(db: Database, ci: string): Promise<voi
         const deleteQuery = "DELETE FROM alumnos WHERE ci = ?";
         db.run(deleteQuery, [ci], function(err: Error|null){
             if(err){
+                logger.log('Error al eliminar alumno de la base de datos: ' + err.message);
                 reject(new Error(err.message));
             } else {
-                if(debug) console.log(`Alumno ${ci} eliminado`);
                 resolve()
             }
         });

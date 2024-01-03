@@ -4,6 +4,9 @@ import { newGroupHTMLPath } from "../groupManager/newGroup/newGroup";
 import { deleteGroupHTMLPath } from "../groupManager/deleteGroup/deleteGroup";
 import { newStudentHTMLPath } from "../studentManager/newStudent/newStudent";
 import { deleteStudentHTMLPath } from "../studentManager/deleteStudent/deleteStudent";
+import Logger from "../logger/logger";
+
+const logger = new Logger("menu.log");
 
 export const setMainMenu = (window: BrowserWindow) => {
     const template: Array<object> = [
@@ -62,6 +65,10 @@ export const setMainMenu = (window: BrowserWindow) => {
         }
     ]
 
-    const menu = Menu.buildFromTemplate(template)
-    Menu.setApplicationMenu(menu)
+    const menu = Menu.buildFromTemplate(template);
+    try{
+        Menu.setApplicationMenu(menu);
+    } catch (err:any) {
+        logger.log('Error al crear el menú: ' + err.message);
+    }
 }
