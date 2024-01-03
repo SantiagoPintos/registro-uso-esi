@@ -1,3 +1,4 @@
+import { app } from 'electron';
 import fs from 'fs';
 import path from 'path';
 
@@ -5,7 +6,11 @@ class Logger {
   private logFilePath: string;
 
   constructor(logFileName: string) {
-    this.logFilePath = path.join(__dirname, logFileName);
+    const logsDir = path.join(app.getPath('userData'), 'Logs');
+    if (!fs.existsSync(logsDir)) {
+      fs.mkdirSync(logsDir);
+    }
+    this.logFilePath = path.join(logsDir, logFileName);
   }
 
   log(message: string): void {
@@ -14,7 +19,7 @@ class Logger {
 
     fs.appendFile(this.logFilePath, logMessage, (err) => {
       if (err) {
-        console.error('Failed to write to log file:', err);
+        throw new Error("Error al escribir en el archivo de log");
       }
     });
   }
