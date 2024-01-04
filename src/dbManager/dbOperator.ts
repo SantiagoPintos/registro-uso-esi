@@ -94,7 +94,7 @@ function updateRegistro(db: Database, data: Registro, resolve: () => void, rejec
 }
 
 function insertRegistro(db: Database, data: Registro, resolve: () => void, reject: (error: Error) => void): void {
-    const insertQuery = "INSERT INTO registro(alumno, entrada) VALUES(?, ?)";
+    const insertQuery = "INSERT INTO registro(alumno, entrada, salida) VALUES(?, ?, null)";
     db.run(insertQuery, [data.alumno.ci, data.hora], function (err: Error | null) {
         if (err) {
             logAndReject("Error al insertar registro de uso en la base de datos: " + err.message, reject);
