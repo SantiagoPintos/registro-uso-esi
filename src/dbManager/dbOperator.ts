@@ -6,7 +6,7 @@ export function createData(db: Database){
     const createQueryGrupo= "CREATE TABLE IF NOT EXISTS Grupo(nombre TEXT PRIMARY KEY)";
     const createQueryAlumnos = "CREATE TABLE IF NOT EXISTS alumnos (ci TEXT PRIMARY KEY, nombre TEXT NOT NULL, apellido TEXT NOT NULL, grupo TEXT, FOREIGN KEY(grupo) REFERENCES Grupo(nombre))";
     const createQueryRegistro= "CREATE TABLE IF NOT EXISTS registro (alumno TEXT PRIMARY KEY, entrada DATETIME NOT NULL, salida DATETIME NOT NULL, FOREIGN KEY (alumno) REFERENCES alumnos(ci))";
-
+    
     try {
         db.run(createQueryGrupo, [], function(err: Error|null){
             if (err) {
@@ -30,7 +30,7 @@ export function createData(db: Database){
         logger.log('Error al crear las tablas de la base de datos: ' + err.message);
         throw new Error('Imposible crear tablas de base de datos'+ err);
     }
-
+    
 }
 
 export function insertGrupo(db: Database, data: Grupo): Promise<void> {
@@ -67,11 +67,46 @@ export async function insertAlumnoInDB(db: Database, data: Alumno): Promise<void
     })
 }
 
-export function insertRegistro(db:Database, data:Registro){
-    const insertQuery = "INSERT INTO Registro(alumno, entrada, saluda) VALUES(?, ?, ?)";
-    db.run(insertQuery, [data.alumno, data.entrada, data.salida], function (err: Error|null){
-        if(err) throw new Error(err.message);
-    })
+export function insertOrUpdateRegistro(db: Database, data: Registro): Promise<void> {
+    return new Promise((resolve, reject) => {
+        const selectQuery = "SELECT * FROM registro WHERE alumno = ? AND entrada = ?";
+        db.get(selectQuery, [data.alumno.ci, data.hora], (err, row) => {
+            if (err) {
+                logAndReject("Error al consultar la base de datos: " + err.message, reject);
+            } else if (row) {
+                updateRegistro(db, data, resolve, reject);
+            } else {
+                insertRegistro(db, data, resolve, reject);
+            }
+        });
+    });
+}
+
+function updateRegistro(db: Database, data: Registro, resolve: () => void, reject: (error: Error) => void): void {
+    const updateQuery = "UPDATE registro SET salida = ? WHERE alumno = ? AND entrada = ?";
+    db.run(updateQuery, [data.alumno.ci, data.hora], function (err: Error | null) {
+        if (err) {
+            logAndReject("Error al actualizar registro de uso en la base de datos: " + err.message, reject);
+        } else {
+            resolve();
+        }
+    });
+}
+
+function insertRegistro(db: Database, data: Registro, resolve: () => void, reject: (error: Error) => void): void {
+    const insertQuery = "INSERT INTO registro(alumno, entrada) VALUES(?, ?)";
+    db.run(insertQuery, [data.alumno.ci, data.hora], function (err: Error | null) {
+        if (err) {
+            logAndReject("Error al insertar registro de uso en la base de datos: " + err.message, reject);
+        } else {
+            resolve();
+        }
+    });
+}
+
+function logAndReject(errorMessage: string, reject: (error: Error) => void): void {
+    logger.log(errorMessage);
+    reject(new Error(errorMessage));
 }
 
 export function isInDB(db: Database, ci: string): boolean{
@@ -79,12 +114,12 @@ export function isInDB(db: Database, ci: string): boolean{
     let result: boolean = false;
     try{
         db.get(selectQuery, [ci], function(err: Error|null, row: any){
-        if(err) {
-            logger.log('Error en método isInDB: ' + err.message);
-            throw new Error(err.message)
-        }
-        if(row) result = true;
-    })
+            if(err) {
+                logger.log('Error en método isInDB: ' + err.message);
+                throw new Error(err.message)
+            }
+            if(row) result = true;
+        })
     }
     catch(err:any){
         logger.log('Error al buscar en la base de datos: ' + err.message);

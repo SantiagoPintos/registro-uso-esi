@@ -12,8 +12,7 @@ declare global {
 
     interface Registro{
         alumno: Alumno,
-        entrada: Date,
-        salida: Date,
+        hora: Date,
     }
 }
 
