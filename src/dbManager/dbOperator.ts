@@ -69,7 +69,7 @@ export async function insertAlumnoInDB(db: Database, data: Alumno): Promise<void
 
 export function insertOrUpdateRegistro(db: Database, data: Registro): Promise<void> {
     return new Promise((resolve, reject) => {
-        const selectQuery = "SELECT * FROM registro WHERE alumno = ? AND entrada = ?";
+        const selectQuery = "SELECT * FROM registro WHERE alumno = ? AND entrada = ? AND salida = null";
         db.get(selectQuery, [data.alumno.ci, data.hora], (err, row) => {
             if (err) {
                 logAndReject("Error al consultar la base de datos: " + err.message, reject);
